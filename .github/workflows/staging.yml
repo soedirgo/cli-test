@@ -13,12 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/setup-go@v2
-        with:
-          go-version: "^1.16.6"
-
       - run: |
-          ./cli link --url $STAGING_DB_URL
-          ./cli deploy
-        env:
-          STAGING_DB_URL: ${{ secrets.STAGING_DB_URL }}
+          curl -sSL "https://github.com/supabase/cli/releases/download/v0.31.2/supabase_0.31.2_linux_amd64.tar.gz" | tar -xz
+          chmod +x ./supabase
+          ./supabase db remote set ${{ secrets.STAGING_DB_URL }}
+          ./supabase db push
