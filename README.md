@@ -13,16 +13,15 @@
 - staging setup
     - take `STAGING_DB_URL`
     - GitHub: set secret `STAGING_DB_URL`
-    - `supabase link --url $STAGING_DB_URL --setup-staging`
+    - `supabase db remote set $STAGING_DB_URL`
     - create `develop` branch locally
     - push `develop` to origin
-    - wait for deploy
-- new migration
-    - add new migration
-    - commit & push
-    - wait for deploy
-- release to prod
-    - create PR to `main`
+    - wait for staging deploy
+- push new migrations to staging/prod
+    - create local git branch, e.g. `some-branch`
+    - add new migration locally with `supabase db commit` or `supabase migrations new`
+    - git commit & push to `origin/some-branch`
+    - create PR from `origin/some-branch` to `origin/develop`/`origin/main`
     - merge PR
     - wait for deploy
 
